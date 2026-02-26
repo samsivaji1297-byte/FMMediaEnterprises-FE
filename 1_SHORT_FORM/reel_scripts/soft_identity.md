@@ -5,7 +5,7 @@ You need a framework that matches how you already think.
 Once you align with that, everything moves.
 
 Your upgrades happen quietly.  
-You don’t force them — you recognise them.  
+You don’t force them - you recognise them.  
 That’s why alignment feels like relief.
 
 You’re not behind.  
