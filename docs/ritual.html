@@ -10,7 +10,7 @@
     --fg: #f5f5f5;
     --muted: #b8bcc7;
     --accent: #ffffff;
-    --glow: rgba(255,255,255,0.25);
+    --glow: rgba(255,255,255,0.35);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -26,20 +26,80 @@
     justify-content: center;
   }
 
+  /* INTRO OVERLAY */
+  .intro {
+    position: fixed;
+    inset: 0;
+    background: #0b0d11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    animation: introFade 2.4s ease forwards;
+  }
+
+  .intro-text {
+    font-size: 1.2rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: introText 1.8s ease forwards;
+    color: var(--muted);
+  }
+
+  @keyframes introText {
+    0% { opacity: 0; transform: translateY(12px); }
+    40% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-12px); }
+  }
+
+  @keyframes introFade {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+  }
+
+  /* TAP TO ACTIVATE OVERLAY */
+  .activate {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+    cursor: pointer;
+    transition: opacity 0.6s ease;
+  }
+
+  .activate-text {
+    font-size: 1rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg);
+    opacity: 0.85;
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 14px 28px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.05);
+  }
+
   /* FOG LAYERS */
   .fog {
     position: absolute;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 60%);
-    filter: blur(80px);
-    animation: fogMove 22s ease-in-out infinite;
-    opacity: 0.35;
+    width: 240%;
+    height: 240%;
+    background: radial-gradient(circle, rgba(255,255,255,0.12), transparent 70%);
+    filter: blur(120px);
+    animation: fogMove 18s ease-in-out infinite;
+    opacity: 0.45;
+    transition: opacity 1.2s ease;
   }
 
   @keyframes fogMove {
     0% { transform: translate(-20%, -10%) scale(1); }
-    50% { transform: translate(10%, 10%) scale(1.2); }
+    50% { transform: translate(20%, 20%) scale(1.25); }
     100% { transform: translate(-20%, -10%) scale(1); }
   }
 
@@ -53,18 +113,17 @@
 
   .particle {
     position: absolute;
-    width: 3px;
-    height: 3px;
-    background: rgba(255,255,255,0.5);
+    width: 4px;
+    height: 4px;
+    background: rgba(255,255,255,0.7);
     border-radius: 50%;
     animation: floatUp linear infinite;
-    opacity: 0.7;
   }
 
   @keyframes floatUp {
     0% { transform: translateY(100vh) scale(0.4); opacity: 0; }
-    10% { opacity: 0.7; }
-    100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    10% { opacity: 0.9; }
+    100% { transform: translateY(-10vh) scale(1.1); opacity: 0; }
   }
 
   /* CARD */
@@ -73,19 +132,20 @@
     width: 92%;
     max-width: 420px;
     padding: 40px 32px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.18);
     border-radius: 22px;
     backdrop-filter: blur(18px);
     box-shadow: 0 0 60px rgba(0,0,0,0.6);
     text-align: center;
-    animation: fadeIn 1.6s ease;
+    animation: cardFade 1.6s ease forwards;
+    opacity: 0;
     z-index: 10;
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  @keyframes cardFade {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
   h1 {
@@ -109,11 +169,11 @@
     display: inline-block;
     padding: 16px 38px;
     border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.25);
+    border: 1px solid rgba(255,255,255,0.35);
     background: linear-gradient(
       to bottom right,
-      rgba(255,255,255,0.14),
-      rgba(255,255,255,0.05)
+      rgba(255,255,255,0.18),
+      rgba(255,255,255,0.06)
     );
     color: var(--accent);
     text-decoration: none;
@@ -126,9 +186,9 @@
   }
 
   .button:hover {
-    transform: scale(1.08) translateY(-3px);
-    border-color: rgba(255,255,255,0.45);
-    box-shadow: 0 0 28px rgba(255,255,255,0.25);
+    transform: scale(1.1) translateY(-3px);
+    border-color: rgba(255,255,255,0.55);
+    box-shadow: 0 0 32px rgba(255,255,255,0.35);
   }
 
   .button::before {
@@ -140,7 +200,7 @@
     background: linear-gradient(
       120deg,
       transparent,
-      rgba(255,255,255,0.45),
+      rgba(255,255,255,0.55),
       transparent
     );
     transform: skewX(-20deg);
@@ -155,7 +215,15 @@
 
 <body>
 
-<div class="fog"></div>
+<div class="intro">
+  <div class="intro-text">INITIALIZING NODE</div>
+</div>
+
+<div class="activate" id="activate">
+  <div class="activate-text">Tap to Activate Atmosphere</div>
+</div>
+
+<div class="fog" id="fog"></div>
 
 <div class="particles" id="particles"></div>
 
@@ -163,22 +231,33 @@
   <h1>Support This Project</h1>
   <p>Your contribution fuels ongoing development and expansion.</p>
 
-  <a class="button" href="https://paypal.me/saminthansivaji" target="_blank" onclick="startAmbience()">
+  <a class="button" href="https://paypal.me/saminthansivaji" target="_blank">
     Donate via PayPal
   </a>
 </div>
 
 <script>
-  /* PARTICLE GENERATION */
+  /* PARTICLES */
   const container = document.getElementById("particles");
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 60; i++) {
     const p = document.createElement("div");
     p.classList.add("particle");
     p.style.left = Math.random() * 100 + "vw";
-    p.style.animationDuration = 8 + Math.random() * 12 + "s";
+    p.style.animationDuration = 10 + Math.random() * 14 + "s";
     p.style.animationDelay = Math.random() * -20 + "s";
     container.appendChild(p);
   }
+
+  /* TAP TO ACTIVATE */
+  const overlay = document.getElementById("activate");
+  const fog = document.getElementById("fog");
+
+  overlay.addEventListener("click", () => {
+    overlay.style.opacity = "0";
+    overlay.style.pointerEvents = "none";
+    fog.style.opacity = "0.65";
+    startAmbience();
+  });
 
   /* PROCEDURAL AMBIENT SOUND */
   let audioStarted = false;
@@ -192,8 +271,8 @@
     const gain = ctx.createGain();
 
     osc.type = "sine";
-    osc.frequency.value = 48; /* low hum */
-    gain.gain.value = 0.0008; /* extremely soft */
+    osc.frequency.value = 48;
+    gain.gain.value = 0.0012;
 
     osc.connect(gain);
     gain.connect(ctx.destination);
