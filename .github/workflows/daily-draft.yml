@@ -1,0 +1,30 @@
+name: Daily Substack Draft
+
+on:
+  schedule:
+    # Runs every day at 12:00 UTC — adjust to whenever you want the draft
+    # ready before you review it. Cron is always in UTC.
+    - cron: "0 12 * * *"
+  workflow_dispatch: {}  # lets you trigger this manually from the Actions tab
+
+jobs:
+  create-draft:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Create draft on Substack
+        env:
+          SUBSTACK_SID: ${{ secrets.SUBSTACK_SID }}
+          SUBSTACK_LLI: ${{ secrets.SUBSTACK_LLI }}
+          SUBSTACK_PUBLICATION_URL: ${{ secrets.SUBSTACK_PUBLICATION_URL }}
+        run: python publish_draft.py
