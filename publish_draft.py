@@ -109,7 +109,7 @@ def main() -> None:
     cookie_string = build_cookie_string()
 
     api = Api(
-        cookies=cookie_string,
+        cookies_string=cookie_string,
         publication_url=publication_url,
     )
 
