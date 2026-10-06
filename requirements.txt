@@ -1,1 +1,0 @@
-python-substack>=0.4.0
